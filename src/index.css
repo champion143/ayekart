@@ -1,0 +1,397 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f4f4f4 !important;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+*,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.HeaderMainDiv {
+  background-color: #dde1eb;
+  width: 100%;
+  height: 65px;
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.MobileHeaderMainDiv {
+  background-color: #dde1eb;
+  width: 100%;
+  height: 65px;
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.HeaderLeftDiv {
+  /* border-left: 1px solid black; */
+  padding-top: 20px;
+  padding-left: 20px;
+}
+
+.HeaderCenterDiv {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.HeaderRightDiv {
+  margin-top: 15px;
+  float: right;
+  padding-right: 15px;
+}
+
+.SidePanel {
+  height: 100vh;
+  background-color: #dde1eb;
+  width: 240px;
+  /* box-shadow: 2px 0px 5px black; */
+}
+
+.nopadding {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.PageContentMainDiv {
+  width: 100%;
+  height: 100%;
+  background-color: #f4f4f4;
+}
+
+.PageContentContentDiv {
+  margin-left: 240px;
+}
+
+@media (max-width: 600px) {
+  .PageContentContentDiv {
+    margin-left: 0px;
+    padding-bottom: 60px;
+  }
+}
+
+.HomeTopDiv {
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 6.8px 2.2px rgba(94, 167, 207, 0.57);
+  background-color: #ffffff;
+}
+
+#BlueColorText {
+  /* color: #3e98c8; */
+  color: #0d3293;
+}
+
+#GreyColorText {
+  color: #545454 !important;
+}
+
+.HomeSecondDiv {
+  margin: 16px;
+}
+
+.HomeBlueButton {
+  background-color: #0d3293;
+  color: white;
+  box-shadow: 0px 1px 3.8px 0.7px rgba(0, 0, 0, 0.35);
+  border-radius: 50px;
+  padding: 10px 20px;
+  padding-top: 15px;
+  cursor: pointer;
+}
+
+.HomeBlueButtonSmall {
+  background-color: #0d3293;
+  color: white;
+  box-shadow: 0px 1px 3.8px 0.7px rgba(0, 0, 0, 0.35);
+  border-radius: 50px;
+  padding: 5px 10px;
+  padding-top: 10px;
+  cursor: pointer;
+}
+
+.HomeBlueButtonInput {
+  background-color: #0d3293;
+  color: white;
+  box-shadow: 0px 1px 3.8px 0.7px rgba(0, 0, 0, 0.35);
+  border-radius: 50px;
+  padding: 8px 80px;
+  padding-top: 5px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.HomeBlueButtonSmallOutlined {
+  background-color: white;
+  color: blue;
+  box-shadow: 0px 1px 3.8px 0.7px rgba(0, 0, 0, 0.35);
+  border-radius: 50px;
+  padding: 5px 10px;
+  padding-top: 10px;
+  cursor: pointer;
+}
+
+.HomeWhiteButton {
+  color: #0d3293;
+  background-color: white;
+  box-shadow: 0px 1.5px 4.2px 0.3px rgba(0, 0, 0, 0.35);
+  border-radius: 50px;
+  padding: 10px 30px;
+  padding-top: 15px;
+  cursor: pointer;
+}
+
+.HomeSecondDivRightIconItem {
+  margin-left: 20px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.HomeThirdDivItemDiv {
+  border-radius: 12px;
+  box-shadow: 0 0 9.8px 2.2px rgba(62, 152, 200, 0.35);
+  background-color: #ffffff;
+  padding: 10px;
+  margin: 30px;
+  margin-top: 10px;
+}
+
+.HomeThirdDivPayItems {
+  margin: 20px;
+}
+
+.SidePanelTopImageDiv {
+  text-align: center;
+  padding-top: 40px;
+}
+
+.SidePanelMenuDiv {
+  margin: 10px;
+  margin-top: 40px;
+}
+
+.SidePanelItemDiv {
+  padding: 10px;
+  color: #101d3f;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.SidePanelItemDiv:hover {
+  box-shadow: 0 0 6.8px 2.2px rgba(94, 167, 207, 0.57);
+  background-image: linear-gradient(to top, #d7d7d7, white);
+}
+
+#ActiveSideMenuItem {
+  box-shadow: 0 0 6.8px 2.2px rgba(94, 167, 207, 0.57);
+  background-image: linear-gradient(to top, #d7d7d7, white);
+}
+
+.ProductsTopDiv {
+  text-align: center;
+  margin-top: 80px;
+}
+
+.ProductItemDiv {
+  margin: 20px;
+  margin-top: 80px;
+}
+
+.ProductItemDiv img {
+  width: 70px;
+}
+
+.SpecificTopDiv {
+  background-image: linear-gradient(to top, #07194b, #0d3293);
+  padding: 10px;
+}
+
+.SpecificTopDivItemsDiv {
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+.SpecificSecondDiv {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.SpecificThirdDiv {
+  margin-top: 30px;
+}
+
+.LoginMainDiv {
+  background-color: white !important;
+  height: 100vh;
+}
+
+.LoginLogoDiv {
+  text-align: center;
+  padding-top: 200px;
+}
+
+.LoginContentDiv {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.SignupTopDiv {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.SignupFormDiv {
+  margin-top: 50px;
+}
+
+.ProductsFormDiv {
+  margin-top: 20px;
+}
+
+.DragPhotoMainDiv {
+  border: 2px dashed #9e9e9e;
+  border-radius: 10px;
+  text-align: center;
+  padding: 30px;
+}
+
+.HisabEntryTopDiv {
+  margin: 20px;
+}
+
+.HisabEntryRoundMain {
+  border: 0.5px solid black;
+  border-radius: 40px;
+  text-align: center;
+}
+
+.HisabEntryRoundItem {
+  padding: 10px;
+  cursor: pointer;
+  padding-top: 15px;
+}
+
+#HisabEntryRoundItemSelected {
+  color: white;
+  cursor: pointer;
+  background-color: #052e94;
+  border-radius: 40px;
+  border: 1px solid black;
+}
+
+.HisabEntryFormDiv {
+  margin-top: 40px;
+}
+
+#NoHoverLink {
+  text-decoration: none;
+  color: black;
+}
+
+#NoHoverLink:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.ReportPriceHighlighted {
+  background-color: #01579b;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: inline-block;
+  color: white;
+}
+
+.salaryTypeMainDiv {
+  background-color: white;
+  padding: 0 !important;
+}
+
+.salaryTypesItem {
+  padding: 10px;
+  border-top: 1px solid rgb(107, 102, 102);
+  border-bottom: 1px solid rgb(107, 102, 102);
+  cursor: pointer;
+}
+
+#salaryTypeSelectedItem {
+  background-color: #a7bbf0;
+}
+
+.AddStaffMainDiv {
+  margin-top: 20px;
+}
+
+.MonthlyDayItem {
+  border: 1px solid rgb(105, 102, 102);
+  padding: 6px;
+  margin: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+#MonthlyDayItemSelected {
+  background-color: #73abd6;
+}
+
+.salaryCycleInputDiv {
+  background-color: white;
+  padding: 10px;
+  width: 100%;
+  cursor: pointer;
+}
+.openingBalanceMainDiv {
+  background-color: white;
+  padding: 10px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.ProfileMainDiv {
+  margin-top: 40px;
+}
+
+.ProfileSecondDiv {
+  margin-top: 50px;
+}
+
+.ProfileSecondDiv {
+  background-color: white;
+  padding: 20px;
+}
+
+.InvoiceHistorySecondDiv {
+  margin-top: 20px;
+}
+
+.SideDialogMenuItem {
+  margin: 6px;
+  margin-bottom: 20px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.SideDialogMenuItem:hover {
+  background-color: #eeeeee;
+}
+
+.LangItemsMainDiv {
+  text-align: center;
+}
+
+.LangItem {
+  box-shadow: 0 0 6.8px 2.2px rgba(94, 167, 207, 0.57);
+  padding: 8px 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  cursor: pointer;
+}
