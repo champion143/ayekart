@@ -24,7 +24,7 @@ class UpdateStockComponent extends Component {
       cookies: new Cookies(),
       userInfo: {},
       customerId: this.props.match.params.id,
-      selectedOption: "purchase",
+      selectedOption: "purchased",
       data: {},
       stockItem: {},
       isLoading: true,
@@ -40,7 +40,7 @@ class UpdateStockComponent extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  getStock = (key = "purchase") => {
+  getStock = (key = "purchased") => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -72,7 +72,7 @@ class UpdateStockComponent extends Component {
         )[0];
         var amount = 0;
         var qty = 0;
-        if (key === "purchase") {
+        if (key === "purchased") {
           this.setState({
             isLoading: false,
             data: stockItem,
@@ -109,7 +109,7 @@ class UpdateStockComponent extends Component {
   };
 
   handleSubmit = () => {
-    if (this.state.selectedOption === "purchase") {
+    if (this.state.selectedOption === "purchased") {
       this.updateStock({
         entry_type: this.state.selectedOption,
         item_name: this.state.data.item_name,
@@ -417,11 +417,11 @@ class UpdateStockComponent extends Component {
                               sm
                               className="nopaddin HisabEntryRoundItem"
                               id={
-                                this.state.selectedOption === "purchase"
+                                this.state.selectedOption === "purchased"
                                   ? "HisabEntryRoundItemSelected"
                                   : ""
                               }
-                              onClick={() => this.handleSelection("purchase")}
+                              onClick={() => this.handleSelection("purchased")}
                             >
                               <div>
                                 <h6>

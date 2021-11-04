@@ -95,6 +95,7 @@ class StaffReportComponent extends Component {
     this.setState({
       startDate: startDate,
     });
+    this.getUserReports();
     // this.getUserReports(startDate, this.state.endDate);
   };
 
@@ -226,7 +227,8 @@ class StaffReportComponent extends Component {
           endDate: endDate,
         });
         // this.getUserReports(this.state.startDate, endDate);
-        this.getStaff();
+        // this.getStaff();
+        this.getUserReports();
       })
       .catch((err) => (window.location.href = "/login"));
   }
@@ -294,6 +296,7 @@ class StaffReportComponent extends Component {
                                   label="Start Date"
                                   format="dd/MM/yyyy"
                                   value={this.state.startDate}
+                                  maxDate={this.state.endDate}
                                   onChange={this.handleStartDateChange}
                                   KeyboardButtonProps={{
                                     "aria-label": "change date",
@@ -379,6 +382,7 @@ class StaffReportComponent extends Component {
                                   label="End Date"
                                   format="dd/MM/yyyy"
                                   value={this.state.endDate}
+                                  minDate={this.state.endDate}
                                   onChange={this.handleEndDateChange}
                                   KeyboardButtonProps={{
                                     "aria-label": "change date",
@@ -528,7 +532,7 @@ class StaffReportComponent extends Component {
                                             backgroundColor: "#0D3293",
                                           }}
                                         >
-                                          {item.full_name[0]}
+                                          {item.first_name[0]}
                                         </Avatar>
                                       </span>
                                       <span
@@ -537,7 +541,7 @@ class StaffReportComponent extends Component {
                                           paddingTop: "20px",
                                         }}
                                       >
-                                        {item.full_name}
+                                        {item.first_name +" "+ item.last_name}
                                       </span>
                                     </h6>
                                     <br />

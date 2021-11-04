@@ -52,7 +52,8 @@ class ProductsComponent extends Component {
       searchClicked: false,
       products: [],
 
-
+      filterType: 'Weekly',
+      graphData: [],
 
       //
       isMonthly: true,
@@ -155,12 +156,21 @@ class ProductsComponent extends Component {
 
     let d = new Date(endDate);
     let y = d.getFullYear();
+    let m = d.getMonth();
 
-    if(this.state.isMonthly) {
-      ApiUrl = APIURLNEW + "/hisab/charts/monthly?business_id=2&monthly=monthly&year="+y;
+    if(this.state.filterType == 'Weekly') {
+      ApiUrl = APIURLNEW + "/hisab/charts/weekly?business_id="+this.state.userInfo.business.ID+"&weekly=weekly&month_numeric="+m+"&year="+y;
+    } else if(this.state.filterType == 'Monthly') {
+      ApiUrl = APIURLNEW + "/hisab/charts/monthly?business_id="+this.state.userInfo.business.ID+"&monthly=monthly&year="+y;
     } else {
-      ApiUrl = APIURLNEW + "/hisab/charts/yearly?business_id=2&yearly=yearly";
+      ApiUrl = APIURLNEW + "/hisab/charts/yearly?business_id="+this.state.userInfo.business.ID+"&yearly=yearly";
     }
+
+    // if(this.state.isMonthly) {
+    //   ApiUrl = APIURLNEW + "/hisab/charts/monthly?business_id=2&monthly=monthly&year="+y;
+    // } else {
+    //   ApiUrl = APIURLNEW + "/hisab/charts/yearly?business_id=2&yearly=yearly";
+    // }
     fetch(
       ApiUrl,
       requestOptions
@@ -181,7 +191,29 @@ class ProductsComponent extends Component {
         result.Data.forEach((item) => {
           total_purchased += parseFloat(item.sum);
         });
+
+        let localData = [];
+        if(this.state.filterType == 'Weekly') {
+          localData = [0,0,0,0,0];
+          result.Data.forEach((item) => {
+            localData[item.txn_week-1] = item.sum;
+          });
+        } else if(this.state.filterType == 'Monthly') {
+          localData = [0,0,0,0,0,0,0,0,0,0,0,0];
+          result.Data.forEach((item) => {
+            let da = new Date(item.txn_month);
+            let mo = da.getMonth();
+            localData[mo-1] = item.sum;
+          });
+          
+        } else {
+          result.Data.forEach((item) => {
+            localData.push(item.sum);
+          });
+        }
+
         this.setState({
+          graphData: localData,
           isLoading: false,
           soldSum: soldSum,
           returnedSum: returnedSum,
@@ -236,6 +268,9 @@ class ProductsComponent extends Component {
     });
   };
   handleMonthlyOptions = (option) => {
+    this.setState({
+      filterType: option
+    },() => this.getDashboard());
     if (option === "Yearly") {
       this.setState({
         isMonthly: false,
@@ -294,7 +329,9 @@ class ProductsComponent extends Component {
                               onClick={this.handleIsMonthClick}
                               style={{ cursor: "pointer" }}
                             >
-                              {this.state.isMonthly ? "Monthly" : "Yearly"}
+                              {/* {this.state.isMonthly ? "Monthly" : "Yearly"} */}
+
+                              {this.state.filterType}
                               <span>
                                 <img
                                   src={DownArrowImg}
@@ -309,6 +346,13 @@ class ProductsComponent extends Component {
                               open={Boolean(this.state.anchorEl)}
                               onClose={this.handleIsMonthClose}
                             >
+                              <MenuItem
+                                onClick={() =>
+                                  this.handleMonthlyOptions("Weekly")
+                                }
+                              >
+                                <LangConvertComponent name="weekly" />
+                              </MenuItem>
                               <MenuItem
                                 onClick={() =>
                                   this.handleMonthlyOptions("Monthly")
@@ -326,66 +370,70 @@ class ProductsComponent extends Component {
                             </Menu>
                           </div>
                         </Col>
-
-                        <Col sm xs>
-                          <div>
-                            {this.state.dateOpen ? (
-                              <MuiPickersUtilsProvider
-                                utils={DateFnsUtils}
-                                InputProps={{
-                                  color: "white",
-                                  backgroundColor: "white",
-                                }}
-                              >
-                                <KeyboardDatePicker
-                                  ref="testref"
-                                  margin="normal"
-                                  id="date-picker-dialog"
-                                  label="End Date"
-                                  format="dd/MM/yyyy"
-                                  value={this.state.selectedDate}
-                                  onChange={this.handleEndDateChange}
-                                  KeyboardButtonProps={{
-                                    "aria-label": "change date",
+                        
+                        {
+                          this.state.filterType != 'Yearly' ? 
+                          <Col sm xs>
+                            <div>
+                              {this.state.dateOpen ? (
+                                <MuiPickersUtilsProvider
+                                  utils={DateFnsUtils}
+                                  InputProps={{
+                                    color: "white",
+                                    backgroundColor: "white",
                                   }}
-                                  views={
-                                    this.state.isMonthly
-                                      ? ["year", "month"]
-                                      : ["year"]
-                                  }
-                                  autoOk={true}
-                                  open={this.state.dateOpen}
-                                  onClose={() =>
-                                    this.setState({ dateOpen: false })
-                                  }
-                                />
-                              </MuiPickersUtilsProvider>
-                            ) : (
-                              <div>
-                                <h6
-                                  onClick={() =>
-                                    this.setState({ dateOpen: true })
-                                  }
                                 >
-                                  {this.state.isMonthly
-                                    ? moment(this.state.selectedDate).format(
-                                        "MMM YYYY"
-                                      )
-                                    : moment(this.state.selectedDate).format(
-                                        "YYYY"
-                                      )}
-                                  <span>
-                                    <img
-                                      src={DownArrowImg}
-                                      className="img-fluid"
-                                      style={{ width: "20px" }}
-                                    />
-                                  </span>
-                                </h6>
-                              </div>
-                            )}
-                          </div>
-                        </Col>
+                                  <KeyboardDatePicker
+                                    ref="testref"
+                                    margin="normal"
+                                    id="date-picker-dialog"
+                                    label="End Date"
+                                    format="dd/MM/yyyy"
+                                    value={this.state.selectedDate}
+                                    onChange={this.handleEndDateChange}
+                                    KeyboardButtonProps={{
+                                      "aria-label": "change date",
+                                    }}
+                                    views={
+                                      this.state.isMonthly
+                                        ? ["year", "month"]
+                                        : ["year"]
+                                    }
+                                    autoOk={true}
+                                    open={this.state.dateOpen}
+                                    onClose={() =>
+                                      this.setState({ dateOpen: false })
+                                    }
+                                  />
+                                </MuiPickersUtilsProvider>
+                              ) : (
+                                <div>
+                                  <h6
+                                    onClick={() =>
+                                      this.setState({ dateOpen: true })
+                                    }
+                                  >
+                                    {this.state.isMonthly
+                                      ? moment(this.state.selectedDate).format(
+                                          "MMM YYYY"
+                                        )
+                                      : moment(this.state.selectedDate).format(
+                                          "YYYY"
+                                        )}
+                                    <span>
+                                      <img
+                                        src={DownArrowImg}
+                                        className="img-fluid"
+                                        style={{ width: "20px" }}
+                                      />
+                                    </span>
+                                  </h6>
+                                </div>
+                              )}
+                            </div>
+                          </Col>
+                          : <div></div>
+                        }
                       </Row>
 
                       <Row>
@@ -393,21 +441,43 @@ class ProductsComponent extends Component {
                           <div>
                             <Bar
                               data={{
-                                labels: [
-                                  "Purchased"
-                                ],
+                                labels: this.state.filterType == 'Weekly' ? 
+                                ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"] :
+                                this.state.filterType == 'Monthly' ?
+                                ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+                                : ["Time Period Vs Margin Earned in INR"],
                                 datasets: [
                                   {
                                     label: "Units",
                                     backgroundColor: [
-                                      "#FFCC80"
+                                      "#3e98c8",
+                                      "#3e98c8",
+                                      "#3e98c8",
+                                      "#3e98c8",
+                                      "#3e98c8",
+                                      "#3e98c8",
+                                      "#3e98c8",
+                                      "#3e98c8",
+                                      "#3e98c8",
+                                      "#3e98c8",
+                                      "#3e98c8",
+                                      "#3e98c8"
                                     ],
                                     hoverBackgroundColor: [
-                                      "#FB8C00"
+                                      "#3e98c8",
+                                      "#3e98c8",
+                                      "#3e98c8",
+                                      "#3e98c8",
+                                      "#3e98c8",
+                                      "#3e98c8",
+                                      "#3e98c8",
+                                      "#3e98c8",
+                                      "#3e98c8",
+                                      "#3e98c8",
+                                      "#3e98c8",
+                                      "#3e98c8"
                                     ],
-                                    data: [
-                                      this.state.purchasedSum
-                                    ],
+                                    data: this.state.graphData,
                                   },
                                 ],
                               }}
@@ -429,13 +499,13 @@ class ProductsComponent extends Component {
                               <Col sm="0" xs="0" className="">
                                 <div>
                                   <h6>
-                                    <LangConvertComponent name="product_purchased" />
+                                    {/* <LangConvertComponent name="product_purchased" /> */}
                                   </h6>
                                 </div>
                               </Col>
                               <Col sm xs className="nopadding">
                                 <div>
-                                  <h6>₹ {this.state.total_purchased}</h6>
+                                  {/* <h6>₹ {this.state.total_purchased}</h6> */}
                                 </div>
                               </Col>
                             </Row>

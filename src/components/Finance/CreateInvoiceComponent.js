@@ -104,6 +104,7 @@ class CreateInvoiceComponent extends Component {
   }
 
   uploadSignature = () => {
+    console.log("Fine")
     const file = document.getElementById("signature").files[0];
     const reader = new FileReader();
 

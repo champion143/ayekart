@@ -25,6 +25,7 @@ import moment from "moment";
 import DateFnsUtils from "@date-io/date-fns";
 
 import SignaturePad from 'react-signature-pad-wrapper';
+import aws from "aws-sdk";
 
 import {
   KeyboardDatePicker,
@@ -32,9 +33,11 @@ import {
 } from "@material-ui/pickers";
 import Cookies from "universal-cookie/es6";
 import { validateLogin } from "../constants/functions";
-import { APIURL } from "../constants/APIURL";
+import { APIURL , APIURLNEW } from "../constants/APIURL";
 import { Autocomplete } from "@material-ui/lab";
 import { toast } from "react-toastify";
+
+import dataURLtoBlob from 'blueimp-canvas-to-blob';
 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -104,6 +107,7 @@ class CustomerCreateInvoiceComponent extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleProductInputChange = this.handleProductInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.uploadPadSignature = this.uploadPadSignature.bind(this);
   }
 
   uploadSignature = () => {
@@ -689,6 +693,8 @@ class CustomerCreateInvoiceComponent extends Component {
       .then((result) => {
         console.log(result);
         toast.success("Invoice Created");
+        console.log("Data", result.data);
+        this.uploadPadSignature(result.data);
         this.setState({
           createdInvoiceId: result.data.InvoiceID,
         });
@@ -799,6 +805,75 @@ class CustomerCreateInvoiceComponent extends Component {
         window.location.href = "/login";
       });
       this.getCustomerInfo()
+  }
+  uploadPadSignature(invoiceData) {
+    var signature = this.refs.mySignature;
+    var files = signature.toDataURL('image/png');
+
+    var file = dataURLtoBlob(files);
+
+    file = new File([file], "signature.png", {
+      type: "image/jpeg",
+      lastModified: Date.now()
+    });
+
+    const s3 = new aws.S3({
+      endpoint: "https://ayekart-mobile.sfo2.digitaloceanspaces.com",
+      accessKeyId: "JZXLSMYTTPFGOUKX46ZW",
+      secretAccessKey: "iOU3OJckYIMvOiQSsjImYSP8KjJ1b1GnBh3TNKIQkTo",
+    });
+    var config = {
+      Body: file,
+      Bucket:
+        "a4920e07cf09ce0e60dff28729322c22fbbf4bbb4d9663ca8428d0a8b73fe03a",
+      Key: file.name,
+    };
+    s3.putObject(config)
+      .on("build", (request) => {
+        request.httpRequest.headers.Host =
+          "https://ayekart-mobile.sfo2.digitaloceanspaces.com";
+        request.httpRequest.headers.Host =
+          "http://ayekart-mobile.sfo2.digitaloceanspaces.com";
+        request.httpRequest.headers["Content-Length"] = file.size;
+        request.httpRequest.headers["Content-Type"] = "image/jpg";
+        request.httpRequest.headers["x-amz-acl"] = "public-read";
+        request.httpRequest.headers["Access-Control-Allow-Origin"] = "*";
+      })
+      .send((err, data) => {
+        if (err) {
+          console.log("Failed to upload file", `${err}`);
+        } else {
+
+          // upload signature
+          var signatureData = {
+            "business_id": this.state.userInfo.business.ID,
+            "invoice_id": invoiceData.InvoiceID,
+            "company_logo_image_url": "",
+            "retailer_signature": 'https://ayekart-mobile.sfo2.digitaloceanspaces.com/a4920e07cf09ce0e60dff28729322c22fbbf4bbb4d9663ca8428d0a8b73fe03a/'+file.name
+          };
+
+          var raw = JSON.stringify(signatureData);
+
+          var requestOptions = {
+            method: "PUT",
+            body: raw,
+            headers: { 'Content-Type': 'application/json' },
+            redirect: "follow",
+          };
+
+          fetch(
+            "http://139.59.91.183/ayekart/api/hisab/invoices/put_sign&logo",
+            requestOptions
+          )
+            .then((response) => response.json())
+            .then((result) => {
+              console.log(result);
+            })
+            .catch((error) => console.log("error", error));
+                // end
+              }
+            });
+
   }
   render() {
     Object.values(this.state.FormArr).forEach((item) => {
@@ -1018,7 +1093,7 @@ class CustomerCreateInvoiceComponent extends Component {
                                   ):{" "}
                                 </label>
                                 <div style={{ border: "1px solid black" }}>
-                                  <SignaturePad ref={(ref) => { console.log(ref) }} options={{minWidth: 5, maxWidth: 10, penColor: 'rgb(66, 133, 244)'}} />
+                                  <SignaturePad clearButton="true" ref="mySignature" options={{minWidth: 5, maxWidth: 10, penColor: 'rgb(66, 133, 244)'}} />
                                 </div>
                               </div>
                             </Col>

@@ -82,22 +82,38 @@ class StockReportComponent extends Component {
     const tableColumns = ["Item", "Entry Type", "Amount"];
     var tableRows = [];
     this.state.data.forEach((item1) => {
-      item1.stock_entry_log.forEach((item) => {
+
         const tableItem = [
           item1.item_name,
-          item.entry_type === "purchased"
+          item1.entry_type === "purchased"
             ? "Purchased"
-            : item.entry_type === "damaged"
+            : item1.entry_type === "damaged"
             ? "Damaged"
-            : item.entry_type === "returned"
+            : item1.entry_type === "returned"
             ? "Returned"
-            : item.entry_type === "sold"
+            : item1.entry_type === "sold"
             ? "Sold"
             : "",
-          item1.item_purchased + " Units - " + "Rs. " + item1.purchased_value,
+            item1.item_purchased + " Units - " + "Rs. " + item1.purchased_value,
         ];
         tableRows.push(tableItem);
-      });
+     
+      // item1.stock_entry_log.forEach((item) => {
+      //   const tableItem = [
+      //     item1.item_name,
+      //     item.entry_type === "purchased"
+      //       ? "Purchased"
+      //       : item.entry_type === "damaged"
+      //       ? "Damaged"
+      //       : item.entry_type === "returned"
+      //       ? "Returned"
+      //       : item.entry_type === "sold"
+      //       ? "Sold"
+      //       : "",
+      //     item1.item_purchased + " Units - " + "Rs. " + item1.purchased_value,
+      //   ];
+      //   tableRows.push(tableItem);
+      // });
     });
     doc.text("Stock Report", 40, 20, "center");
     doc.autoTable(tableColumns, tableRows, { startY: 30, startX: 40 });
@@ -198,22 +214,18 @@ class StockReportComponent extends Component {
               if (entry.entry_type === "sold") {
                 soldSum += entry.sold_value;
               }
-              if (entry.entry_type === "purchase") {
+              if (entry.entry_type === "purchased") {
                 purchaseSum += entry.purchased_value;
               }
               entryArr.push(entry);
           });
-
-          console.log("purchaseSoldArr");
-          console.log(purchaseSoldArr);
-          console.log("purchaseSoldArr1");
 
           // purchaseSoldArr.forEach((item) => {
           //   item.stock_entry_log.forEach((entry) => {
           //     if (entry.entry_type === "sold") {
           //       soldSum += entry.sold_value;
           //     }
-          //     if (entry.entry_type === "purchase") {
+          //     if (entry.entry_type === "purchased") {
           //       purchaseSum += entry.purchased_value;
           //     }
           //     entryArr.push(entry);
@@ -232,7 +244,7 @@ class StockReportComponent extends Component {
         console.log("error", error);
         this.setState({
           isLoading: false,
-          notFound: true,
+          // notFound: true,
         });
       });
   };
@@ -316,6 +328,7 @@ class StockReportComponent extends Component {
 
         var endDate = [year, month, day].join("-");
         var startDate = [year, month, "01"].join("-");
+        
         this.setState({
           startDate: startDate,
           endDate: endDate,
@@ -366,6 +379,7 @@ class StockReportComponent extends Component {
                             </div>
                           </Col>
                           <Col sm xs>
+                            <p class="text-white">Start Date</p>
                             {this.state.startDateOpen ? (
                               <MuiPickersUtilsProvider
                                 utils={DateFnsUtils}
@@ -375,12 +389,14 @@ class StockReportComponent extends Component {
                                 }}
                               >
                                 <KeyboardDatePicker
+                                  maxDate={this.state.endDate}
                                   ref="testref"
                                   margin="normal"
                                   id="date-picker-dialog"
                                   label="Start Date"
                                   format="dd/MM/yyyy"
                                   value={this.state.startDate}
+                                  max={this.state.endDate}
                                   onChange={this.handleStartDateChange}
                                   KeyboardButtonProps={{
                                     "aria-label": "change date",
@@ -451,6 +467,7 @@ class StockReportComponent extends Component {
                             )}
                           </Col>
                           <Col sm xs>
+                            <p class="text-white">End Date</p>
                             {this.state.endDateOpen ? (
                               <MuiPickersUtilsProvider
                                 utils={DateFnsUtils}
@@ -460,12 +477,14 @@ class StockReportComponent extends Component {
                                 }}
                               >
                                 <KeyboardDatePicker
+                                  minDate={this.state.startDate}
                                   ref="testref"
                                   margin="normal"
                                   id="date-picker-dialog"
                                   label="End Date"
                                   format="dd/MM/yyyy"
                                   value={this.state.endDate}
+                                  min={this.state.startDate}
                                   onChange={this.handleEndDateChange}
                                   KeyboardButtonProps={{
                                     "aria-label": "change date",
