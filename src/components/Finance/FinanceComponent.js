@@ -169,6 +169,7 @@ class FinanceComponent extends Component {
         this.setState({
           userInfo: this.state.cookies.get("userInfo"),
         });
+
         var d = new Date(),
           month = "" + (d.getMonth() + 1),
           day = "" + d.getDate(),
@@ -391,7 +392,8 @@ class FinanceComponent extends Component {
                                 </div>
                               </Col>
                               <Col sm xs>
-                                <Link to="/createinvoice" id="NoHoverLink">
+                                {/* <Link to="/createinvoice" id="NoHoverLink"> */}
+                                <Link to={`/customercreateinvoice/${this.state.userInfo.first_name + " " + this.state.userInfo.last_name }/${this.state.userInfo.mobile}`} id="NoHoverLink">
                                   <div>
                                     <h6>
                                       <LangConvertComponent name="create_invoice" />

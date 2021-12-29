@@ -258,6 +258,17 @@ class AddHisabEntryComponent extends Component {
       });
   };
 
+  buildFileSelector = () => {
+    const fileSelector = document.createElement('input');
+    fileSelector.setAttribute('type', 'file');
+    fileSelector.setAttribute('multiple', 'multiple');
+    return fileSelector;
+  }
+
+  changeHandler = (e) => {
+    alert("okay")
+  }
+
   componentDidMount() {
     validateLogin
       .then((res) => {
@@ -269,6 +280,7 @@ class AddHisabEntryComponent extends Component {
       .catch((err) => {
         window.location.href = "/login";
       });
+    this.fileSelector = this.buildFileSelector();
   }
 
   dragOver = (e) => {
@@ -311,6 +323,19 @@ class AddHisabEntryComponent extends Component {
     }
     return true;
   };
+
+  fileSelect = (e) => {
+    e.preventDefault();
+
+    this.fileSelector.onInputChange(function() {
+      alert("ok")
+    });
+
+    this.fileSelector.click();
+
+
+    
+  }
 
   fileDrop = (e) => {
     e.preventDefault();
@@ -559,6 +584,7 @@ class AddHisabEntryComponent extends Component {
                                   onDragEnter={this.dragEnter}
                                   onDragLeave={this.dragLeave}
                                   onDrop={this.fileDrop}
+                                  onClick={this.fileSelect}
                                 >
                                   <img
                                     src={UploadIcon}

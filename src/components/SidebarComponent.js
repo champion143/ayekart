@@ -243,7 +243,7 @@ class SidebarComponent extends Component {
                 <div
                   className="SidePanelItemDiv"
                   id={
-                    this.state.activePage === "Products"
+                    (this.state.activePage === "Products" || this.state.activePage === "Stock")
                       ? "ActiveSideMenuItem"
                       : ""
                   }

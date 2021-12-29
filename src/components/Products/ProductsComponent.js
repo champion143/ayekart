@@ -156,7 +156,7 @@ class ProductsComponent extends Component {
 
     let d = new Date(endDate);
     let y = d.getFullYear();
-    let m = d.getMonth();
+    let m = d.getMonth() + 1;
 
     if(this.state.filterType == 'Weekly') {
       ApiUrl = APIURLNEW + "/hisab/charts/weekly?business_id="+this.state.userInfo.business.ID+"&weekly=weekly&month_numeric="+m+"&year="+y;
@@ -182,6 +182,9 @@ class ProductsComponent extends Component {
         return response.json();
       })
       .then((result) => {
+
+        console.log("check data", result);
+
         var soldSum = 0;
         var returnedSum = 0;
         var purchasedSum = 0;
@@ -202,8 +205,8 @@ class ProductsComponent extends Component {
           localData = [0,0,0,0,0,0,0,0,0,0,0,0];
           result.Data.forEach((item) => {
             let da = new Date(item.txn_month);
-            let mo = da.getMonth();
-            localData[mo-1] = item.sum;
+            let mo = da.getMonth() + 1;
+            localData[mo - 1] = item.sum;
           });
           
         } else {
@@ -223,7 +226,39 @@ class ProductsComponent extends Component {
           total_sold: total_sold,
         });
       })
-      .catch((error) => console.log("error", error));
+      .catch(
+        (error) => {
+
+        var soldSum = 0;
+        var returnedSum = 0;
+        var purchasedSum = 0;
+        var damagedSum = 0;
+        var total_purchased = 0;
+        var total_sold = 0;
+      
+        let localData = [];
+        if(this.state.filterType == 'Weekly') {
+          localData = [0,0,0,0,0];
+        } else if(this.state.filterType == 'Monthly') {
+          localData = [0,0,0,0,0,0,0,0,0,0,0,0];
+        } else {
+          
+        }
+
+        this.setState({
+          graphData: localData,
+          isLoading: false,
+          soldSum: soldSum,
+          returnedSum: returnedSum,
+          purchasedSum: purchasedSum,
+          damagedSum: damagedSum,
+          total_purchased: total_purchased,
+          total_sold: total_sold,
+        });
+          
+          console.log("error", error);
+        }
+        );
   };
 
   handleEndDateChange = (date) => {

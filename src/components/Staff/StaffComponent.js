@@ -27,6 +27,8 @@ import { Avatar, Dialog, DialogContent, TextField } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import LangConvertComponent from "../LangConvertComponent";
 
+import LoaderGif from "../../assets/loader.gif";
+
 class StaffComponent extends Component {
   constructor(props) {
     super(props);
@@ -122,6 +124,9 @@ class StaffComponent extends Component {
   };
 
   changeAttendance = (key, value, staffId, attendanceId) => {
+    this.setState({
+      isLoading: true
+    });
     if (key === "present") {
       this.updateStaffAttendance(
         {
