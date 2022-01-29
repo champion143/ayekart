@@ -417,6 +417,8 @@ class HomeComponent extends Component {
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
+        myHeaders.append('Access-Control-Allow-Headers', "*");
+        myHeaders.append('Access-Control-Allow-Credentials', true);
 
         var data = {
             "accept_partial": false,
@@ -458,7 +460,6 @@ class HomeComponent extends Component {
 
                 var short_url = result.body.short_url;
                 var myHeaders = new Headers();
-                myHeaders.append("Content-Type", "application/json");
                 myHeaders.append("Content-Type", "application/json");
                 myHeaders.append('Access-Control-Allow-Headers', "*");
                 myHeaders.append('Access-Control-Allow-Credentials', true);
@@ -561,6 +562,8 @@ class HomeComponent extends Component {
     payNowLinkGenerator = () => {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
+        myHeaders.append('Access-Control-Allow-Headers', "*");
+        myHeaders.append('Access-Control-Allow-Credentials', true);
 
         var raw = JSON.stringify({
             dynamicLinkInfo: {
