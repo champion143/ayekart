@@ -324,7 +324,7 @@ class HomeComponent extends Component {
     };
 
     fetch(
-      "http://139.59.91.183/ayekart/api/hisab/razor_pay/response/",
+      "https://dashboard.ayekart.com/ayekart/api/hisab/razor_pay/response/",
       requestOptions
     )
       .then((response) => response.json())
@@ -482,7 +482,7 @@ class HomeComponent extends Component {
     };
 
     fetch(
-      "http://139.59.91.183/ayekart/api/hisab/razor_pay/response/",
+      "https://dashboard.ayekart.com/ayekart/api/hisab/razor_pay/response/",
       requestOptions
     )
       .then((response) => response.json())
