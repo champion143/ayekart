@@ -484,6 +484,8 @@ class HomeComponent extends Component {
     var myHeaders = new Headers();
 myHeaders.append("Authorization", "Basic cnpwX2xpdmVfaHN3ek1TSHV3TENqNlg6MUtkQ1BycjFNQTEwUnZuRnV0TkhjMkRH");
 myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Access-Control-Allow-Headers", "*");
+    myHeaders.append("Access-Control-Allow-Credentials", true);
 
 var raw = JSON.stringify({
   "amount": 1000,
@@ -491,7 +493,7 @@ var raw = JSON.stringify({
   "accept_partial": true,
   "first_min_partial_amount": 100,
   "expire_by": 1691097057,
-  "reference_id": "TSsd1989fdsafhjfhasfh",
+  "reference_id": "TSsd1989fdsafhjfhasfh12",
   "description": "Payment for policy no #23456",
   "customer": {
     "name": "Gaurav Kumar",
