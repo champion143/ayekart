@@ -276,6 +276,8 @@ class HomeComponent extends Component {
   collectMoneySMS = () => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Access-Control-Allow-Headers", "*");
+        myHeaders.append("Access-Control-Allow-Credentials", true);
 
     var data = {
       accept_partial: false,
