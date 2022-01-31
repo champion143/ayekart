@@ -324,7 +324,7 @@ class HomeComponent extends Component {
     };
 
     fetch(
-      "https://dashboard.ayekart.com/ayekart/api/hisab/razor_pay/response/",
+      "http://hisaab.ayekart.com:3003/ayekart/api/hisab/razor_pay/response",
       requestOptions
     )
       .then((response) => response.json())
@@ -481,51 +481,8 @@ class HomeComponent extends Component {
       redirect: "follow",
     };
 
-    var myHeaders = new Headers();
-myHeaders.append("Authorization", "Basic cnpwX2xpdmVfaHN3ek1TSHV3TENqNlg6MUtkQ1BycjFNQTEwUnZuRnV0TkhjMkRH");
-myHeaders.append("Content-Type", "application/json");
-myHeaders.append("Access-Control-Allow-Headers", "*");
-    myHeaders.append("Access-Control-Allow-Credentials", true);
-
-var raw = JSON.stringify({
-  "amount": 1000,
-  "currency": "INR",
-  "accept_partial": true,
-  "first_min_partial_amount": 100,
-  "expire_by": 1691097057,
-  "reference_id": "TSsd1989fdsafhjfhasfh12",
-  "description": "Payment for policy no #23456",
-  "customer": {
-    "name": "Gaurav Kumar",
-    "contact": "+919999999999",
-    "email": "gaurav.kumar@example.com"
-  },
-  "notify": {
-    "sms": true,
-    "email": true
-  },
-  "reminder_enable": true,
-  "notes": {
-    "policy_name": "Jeevan Bima"
-  },
-  "callback_url": "https://example-callback-url.com/",
-  "callback_method": "get"
-});
-
-var requestOptions = {
-  method: 'POST',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
-};
-
-fetch("https://api.razorpay.com/v1/payment_links", requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
-
     fetch(
-      "https://dashboard.ayekart.com/ayekart/api/hisab/razor_pay/response/",
+      "http://hisaab.ayekart.com:3003/ayekart/api/hisab/razor_pay/response",
       requestOptions
     )
       .then((response) => response.json())
