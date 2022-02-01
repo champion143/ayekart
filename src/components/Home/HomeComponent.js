@@ -324,7 +324,7 @@ class HomeComponent extends Component {
     };
 
     fetch(
-      "http://hisaab.ayekart.com:3003/ayekart/api/hisab/razor_pay/response",
+      "https://pickpic4u.com/razor.php",
       requestOptions
     )
       .then((response) => response.json())
@@ -482,7 +482,7 @@ class HomeComponent extends Component {
     };
 
     fetch(
-      "http://hisaab.ayekart.com:3003/ayekart/api/hisab/razor_pay/response",
+      "https://pickpic4u.com/razor.php",
       requestOptions
     )
       .then((response) => response.json())
