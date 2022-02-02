@@ -360,12 +360,12 @@ class HomeComponent extends Component {
           redirect: "follow",
         };
 
-        fetch(
-          "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyA8exxQ8w3d52Rm6Wy84wBmgXuohLRie3g",
-          requestOptions
-        )
-          .then((response) => response.json())
-          .then((result) => {
+        // fetch(
+        //   "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyA8exxQ8w3d52Rm6Wy84wBmgXuohLRie3g",
+        //   requestOptions
+        // )
+        //   .then((response) => response.json())
+        //   .then((result) => {
             window.open(
               "sms://+91" +
                 this.state.mobile +
@@ -379,8 +379,8 @@ class HomeComponent extends Component {
             );
           })
           .catch((error) => console.log("error", error));
-      })
-      .catch((error) => console.log("error", error));
+      // })
+      // .catch((error) => console.log("error", error));
 
     // var myHeaders = new Headers();
     // myHeaders.append("Content-Type", "application/json");
@@ -492,6 +492,8 @@ class HomeComponent extends Component {
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Access-Control-Allow-Headers", "*");
         myHeaders.append("Access-Control-Allow-Credentials", true);
+        myHeaders.append("Access-Control-Allow-Origin", "*");
+        myHeaders.append("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
 
         var raw = JSON.stringify({
           dynamicLinkInfo: {
@@ -518,12 +520,12 @@ class HomeComponent extends Component {
           redirect: "follow",
         };
 
-        fetch(
-          "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyA8exxQ8w3d52Rm6Wy84wBmgXuohLRie3g",
-          requestOptions
-        )
-          .then((response) => response.json())
-          .then((result) => {
+        // fetch(
+        //   "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyA8exxQ8w3d52Rm6Wy84wBmgXuohLRie3g",
+        //   requestOptions
+        // )
+        //   .then((response) => response.json())
+        //   .then((result) => {
             window.open(
               "https://wa.me/+91" +
                 this.state.selectedUser.mobile +
@@ -537,8 +539,8 @@ class HomeComponent extends Component {
             );
           })
           .catch((error) => console.log("error", error));
-      })
-      .catch((error) => console.log("error", error));
+      // })
+      // .catch((error) => console.log("error", error));
 
     // var myHeaders = new Headers();
     // myHeaders.append("Content-Type", "application/json");
