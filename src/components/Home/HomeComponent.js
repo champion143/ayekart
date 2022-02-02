@@ -324,7 +324,7 @@ class HomeComponent extends Component {
     };
 
     fetch(
-      "http://143.244.132.83/razor.php",
+      "https://apihisabrazorpay.ayekart.com/razor.php",
       requestOptions
     )
       .then((response) => response.json())
@@ -482,7 +482,7 @@ class HomeComponent extends Component {
     };
 
     fetch(
-      "http://143.244.132.83/razor.php",
+      "https://apihisabrazorpay.ayekart.com/razor.php",
       requestOptions
     )
       .then((response) => response.json())
