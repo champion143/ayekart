@@ -324,7 +324,7 @@ class HomeComponent extends Component {
     };
 
     fetch(
-      "https://pickpic4u.com/razor.php",
+      "http://pickpic4u.com/razor.php",
       requestOptions
     )
       .then((response) => response.json())
@@ -482,7 +482,7 @@ class HomeComponent extends Component {
     };
 
     fetch(
-      "https://pickpic4u.com/razor.php",
+      "http://pickpic4u.com/razor.php",
       requestOptions
     )
       .then((response) => response.json())
