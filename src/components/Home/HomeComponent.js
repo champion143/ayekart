@@ -329,7 +329,7 @@ class HomeComponent extends Component {
     )
       .then((response) => response.json())
       .then((result) => {
-        var short_url = result.body.short_url;
+        var short_url = result.short_url;
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Access-Control-Allow-Headers", "*");
@@ -487,7 +487,7 @@ class HomeComponent extends Component {
     )
       .then((response) => response.json())
       .then((result) => {
-        var short_url = result.body.short_url;
+        var short_url = result.short_url;
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Access-Control-Allow-Headers", "*");
