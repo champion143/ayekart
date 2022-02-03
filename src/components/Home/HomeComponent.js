@@ -367,7 +367,7 @@ class HomeComponent extends Component {
         //   .then((response) => response.json())
         //   .then((result) => {
             window.open(
-              "sms://+91" +
+              "sms:+91" +
                 this.state.mobile +
                 "?body=Dear%20Sir/Madam,%20Your%20payment%20of%20₹" +
                 this.state.UPIAmount +
