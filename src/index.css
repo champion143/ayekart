@@ -395,3 +395,45 @@ body {
   margin-top: 20px;
   cursor: pointer;
 }
+
+.bankDetailIcon{
+  width: 140px;
+  margin: 30px auto;
+}
+
+.bankDetailHeading{
+  font-size: 27.5px;
+  line-height: 2.67;
+  letter-spacing: normal;
+  text-align: justify;
+  color: #050505;
+  display: flex;
+  justify-content: center;
+}
+
+.bankDetailSubHeading{
+  font-size: 36.5px;
+  font-weight: 500;
+  line-height: 2.01;
+  letter-spacing: normal;
+  text-align: justify;
+  color: #050505;
+  display: flex;
+  justify-content: center;
+}
+
+.bankIcon {
+  justify-content: center;
+  display: flex;
+}
+.bankIcon img {
+  width: 60px;
+}
+.rightArrow {
+  margin-right: 20px;
+  justify-content: end;
+  display: flex;
+}
+.rightArrow img {
+  width:28px
+}

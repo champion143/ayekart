@@ -218,6 +218,29 @@ class FinanceComponent extends Component {
 
                     <div className="HomeThirdDiv">
                       <Container fluid>
+                        <Link to="/bankDetail" id="NoHoverLink">
+                          <Row>
+                            <Col sm={2}>
+                              <span className="bankIcon">
+                                <img src={BankIcon} alt="bankIcon" />
+                              </span>
+                            </Col>
+                            <Col sm={8}>
+                              <span className="bankAccountAdd">
+                                <b><LangConvertComponent name="add_your_bank_account" /></b>
+                              </span><br />
+                              <span className="bankAccountAdd">                              
+                                recive money in every reminder
+                              </span>
+                            </Col>
+                            <Col sm={2}>
+                              <span className="rightArrow" >
+                                <img src={RightArrowBlack} alt="arrow" />
+                              </span>
+                            </Col>
+                          </Row>
+                        </Link>
+                        <br />
                         <Row>
                           <Col sm className="HomeThirdDivItemDiv">
                             <div>

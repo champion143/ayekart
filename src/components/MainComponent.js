@@ -37,6 +37,7 @@ import LangConvertComponent from "./LangConvertComponent";
 import InventoryComponent from "./Inventory/InventoryComponent";
 import CustomerCreateInvoiceComponent from "./Finance/CustomerCreateInvoiceComponent";
 import SetPasswordComponent from "./PreLogin/SetPasswordComponent";
+import AddBankDetailComponent from "./Finance/AddBankDetailComponent";
 
 class MainComponent extends Component {
   constructor(props) {
@@ -171,6 +172,8 @@ class MainComponent extends Component {
 
           {/* Inventory */}
           <Route path="/inventory" component={InventoryComponent} />
+          
+          <Route path="/bankdetail" component={AddBankDetailComponent} />
 
           <Redirect to="/login" />
         </Switch>
