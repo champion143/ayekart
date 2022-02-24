@@ -437,3 +437,16 @@ body {
 .rightArrow img {
   width:28px
 }
+
+.BankDetails {
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 200px);
+  display: flex;
+}
+span.link-edit {
+  color: #17b8ff;
+  font-weight: bold;
+}

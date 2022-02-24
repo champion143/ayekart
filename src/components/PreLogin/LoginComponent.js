@@ -137,6 +137,7 @@ class LoginComponent extends Component {
         // User signed in successfully.
         const user = result.user;
         console.log(user);
+        new Cookies().set("userToken", user.Aa);
         toast.dismiss();
         toast.success("Login Success");
         this.handleDialogClose();
@@ -335,7 +336,7 @@ class LoginComponent extends Component {
       .signInWithPhoneNumber("+91" + this.state.mobileNumber, appVerifier)
       .then((confirmResult) => {
         // success
-        console.log("SMS sent" + confirmResult);
+        console.log("SMS sent" + JSON.stringify(confirmResult));
         toast("OTP sent");
         this.setState({
           confirmResult: confirmResult,

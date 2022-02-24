@@ -8,13 +8,15 @@ import {
 } from "@material-ui/core";
 
 import TrustedIcon from "../../assets/trusted.png";
+import bankIcon from "../../assets/BankIcon.png";
 import Cookies from "universal-cookie/es6";
 import { validateLogin } from "../constants/functions";
-import { APIURL1 } from "../constants/APIURL";
+import { APIURL } from "../constants/APIURL";
 import { toast } from "react-toastify";
 import "jspdf-autotable";
 import LoadingComponent from "../LoadingComponent";
 import LangConvertComponent from "../LangConvertComponent";
+import { Link } from "react-router-dom";
 
 class AddBankDetailComponent extends Component {
   constructor(props) {
@@ -23,9 +25,13 @@ class AddBankDetailComponent extends Component {
     this.state = {
       cookies: new Cookies(),
       userInfo: {},
+      token:'',
       account_holder_name: "",
       ifsc_code: "",
       account_number: 0,
+      business_id:0,
+      bankDetails:null,
+      editDetail:false,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -49,32 +55,67 @@ class AddBankDetailComponent extends Component {
     ) {
       toast.error("Enter all the required fields");
     } else {
-      this.addAccount({
-        "business_id":this.state.userInfo?.business?.ID,
-        "ifsc_code":this.state.ifsc_code,
-        "account_holder_name":this.state.account_holder_name,
-        "account_number":this.state.account_number,
-        "branch_name":"Pune",
-        "bank_name":"ICICI"
+      this.verifyAccount({
+        "ifsc":this.state.ifsc_code,
+        "id_number":this.state.account_number,
       });
     }
   };
 
-  addAccount = (creds) => {
+  verifyAccount = (creds) => {
+    
+    toast("Account verification in progress. sending 1 ru. to account holder");
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-
-    var raw = JSON.stringify(creds);
-
+    myHeaders.append('Authorization', 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzODg3OTY5MCwianRpIjoiZjQ5ZWFiNGUtYzdlMS00Njc2LTgyYTEtZmQzZjM0NzQwMjRkIiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5IjoiZGV2LmF5ZWthcnRAYWFkaGFhcmFwaS5pbyIsIm5iZiI6MTYzODg3OTY5MCwiZXhwIjoxOTU0MjM5NjkwLCJ1c2VyX2NsYWltcyI6eyJzY29wZXMiOlsicmVhZCJdfX0.-nN8JRZ0ClRLojFWxveXVrq7WFiNQszNnzK5FC7Pz_c');
+    // myHeaders.append("Access-Control-Allow-Headers", "*");
+    //     myHeaders.append("Access-Control-Allow-Credentials", true)
     var requestOptions = {
-      method: "POST",
-      body: raw,
-      redirect: "follow",
+      method: 'POST',
+      headers: myHeaders,
+      body: JSON.stringify(creds),
+      redirect: 'follow'
     };
 
-    fetch(
-      APIURL1 +
-        "/hisab/bank_details/",
+    fetch('https://kyc-api.aadhaarkyc.io/api/v1/bank-verification/',
+      requestOptions
+    )
+      .then((response) => {
+        if (response.status !== 200) {
+          throw Error("Error");
+        }
+        return response.json();
+      })
+      .then((result) => {
+        console.log(result);
+        toast.success("Account Verified");
+        this.addAccount({
+          "business_id":this.userInfo?.business_id,
+          "ifsc_code":this.state.ifsc_code,
+          "account_holder_name":this.state.account_holder_name,
+          "account_number":this.state.account_number,
+          "branch_name":"Pune",
+          "bank_name":"ICICI"
+      })
+      })
+      .catch((error) => {
+        console.log("error", error);
+        toast.error("Something error");
+      });
+  }
+
+  addAccount = (creds) => {
+
+    toast("Saving account details");
+    var requestOptions = {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(creds),
+    };
+
+    fetch(APIURL+"/hisab/bank_details/",
       requestOptions
     )
       .then((response) => {
@@ -92,12 +133,45 @@ class AddBankDetailComponent extends Component {
         toast.error("Something error");
       });
   };
+
+  checkAccount = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(
+      APIURL +
+        "/hisab/bank_details/?business_id="+this.state.userInfo?.business?.ID,
+      requestOptions
+    )
+      .then((response) => {
+        if (response.status !== 200) {
+          throw Error("Error");
+        }
+        return response.json();
+      })
+      .then((result) => {
+        console.log(result);
+        this.setState({bankDetails:result.bank_details})
+      })
+      .catch((error) => {
+        toast.error(error?.Error);
+      });
+  };
   componentDidMount() {
     validateLogin
       .then((res) => {
         this.setState({
           userInfo: this.state.cookies.get("userInfo"),
-        },() => console.log(this.state.userInfo));
+          token:this.state.cookies.get('userToken')
+        },() => {
+          console.log(this.state.token)
+          this.setState({business_id:this.state.userInfo?.business?.ID});
+          this.checkAccount()});
       })
       .catch((err) => {
         window.location.href = "/login";
@@ -125,6 +199,25 @@ class AddBankDetailComponent extends Component {
                   <HeaderComponent />
 
                   <div className="HomeMainDiv" style={{ marginTop: "20px" }}>
+                  {
+                    !this.state.bankDetails ?
+                    <Container>
+                      <Row>
+                        <Col>
+                          <div className="BankDetails">
+                            <img src={bankIcon} alt="bankIcon" /><br />
+                            <span><b>{this.state.bankDetails?.account_number}</b></span><br />
+                            <span><b>{this.state.bankDetails?.ifsc_code}</b></span><br />
+                            <Link to="/editBankDetail" id="NoHoverLink">
+                              <span className="link-edit">
+                                  Change Bank Account ?
+                              </span>
+                            </Link>
+                          </div>
+                        </Col>
+                      </Row>
+                    </Container>
+                    :
                     <Container>
                       <Row>
                         <Col sm="12" md={{ offset: 4, order: 2, size: 4 }}   >
@@ -207,6 +300,8 @@ class AddBankDetailComponent extends Component {
                       </Row>
                       <br />
                     </Container>
+                  }
+                    
                   </div>
                 </div>
               </div>
