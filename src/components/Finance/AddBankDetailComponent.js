@@ -28,8 +28,8 @@ class AddBankDetailComponent extends Component {
       token:'',
       account_holder_name: "",
       ifsc_code: "",
-      account_number: 0,
-      business_id:0,
+      account_number: '',
+      business_id:'',
       bankDetails:null,
       editDetail:false,
     };

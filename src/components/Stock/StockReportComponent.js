@@ -165,6 +165,9 @@ class StockReportComponent extends Component {
     var requestOptions = {
       method: "GET",
       redirect: "follow",
+      headers: {
+      'Content-Type': 'application/json'
+      },
     };
 
     fetch(
@@ -253,6 +256,9 @@ class StockReportComponent extends Component {
     var requestOptions = {
       method: "GET",
       redirect: "follow",
+      headers: {
+      'Content-Type': 'application/json'
+      },
     };
 
     fetch(

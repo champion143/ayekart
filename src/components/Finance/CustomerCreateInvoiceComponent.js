@@ -1057,7 +1057,7 @@ class CustomerCreateInvoiceComponent extends Component {
                           <Row>
                             <Col sm>
                               <div>
-                                <label>
+                                {/* <label>
                                   <LangConvertComponent name="upload_signature" />
                                 </label>
                                 <br />
@@ -1067,7 +1067,7 @@ class CustomerCreateInvoiceComponent extends Component {
                                   placeholder="Upload Signature"
                                   id="signature"
                                   onChange={this.uploadSignature}
-                                />
+                                /> */}
                                 <br />
                                 <br />
                                 <label>
@@ -1089,8 +1089,8 @@ class CustomerCreateInvoiceComponent extends Component {
                                 <label>
                                   <LangConvertComponent name="upload_signature" />
                                   (
-                                  <LangConvertComponent name="optional" />
-                                  ):{" "}
+                                  {/* <LangConvertComponent name="optional" />
+                                  ):{" "} */}
                                 </label>
                                 <div style={{ border: "1px solid black" }}>
                                   <SignaturePad clearButton="true" ref="mySignature" options={{minWidth: 5, maxWidth: 10, penColor: 'rgb(66, 133, 244)'}} />
