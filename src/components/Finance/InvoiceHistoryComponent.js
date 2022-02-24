@@ -202,7 +202,7 @@ class InvoiceHistoryComponent extends Component {
         tableRows.push([
           {
             text: "Total Amount: Rs. " + this.state.total_amount,
-            colSpan: 7,
+            colSpan: 6,
             alignment: "right",
             bold: true,
           },
@@ -228,7 +228,7 @@ class InvoiceHistoryComponent extends Component {
             border: [true, true, true, false],
             text: "For " + data.business_name,
             alignment: "right",
-            colSpan: 7,
+            colSpan: 6,
           },
         ]);
         tableRows.push([
@@ -237,7 +237,7 @@ class InvoiceHistoryComponent extends Component {
             image: data.retailer_signature,
             alignment: "right",
             width: 30,
-            colSpan: 7,
+            colSpan: 6,
           },
         ]);
         tableRows.push([

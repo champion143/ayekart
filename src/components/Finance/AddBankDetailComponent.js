@@ -11,7 +11,7 @@ import TrustedIcon from "../../assets/trusted.png";
 import bankIcon from "../../assets/BankIcon.png";
 import Cookies from "universal-cookie/es6";
 import { validateLogin } from "../constants/functions";
-import { APIURL } from "../constants/APIURL";
+import { APIURL, APIURLNEW } from "../constants/APIURL";
 import { toast } from "react-toastify";
 import "jspdf-autotable";
 import LoadingComponent from "../LoadingComponent";
@@ -115,7 +115,7 @@ class AddBankDetailComponent extends Component {
       body: JSON.stringify(creds),
     };
 
-    fetch(APIURL+"/hisab/bank_details/",
+    fetch(APIURLNEW+"/hisab/bank_details/",
       requestOptions
     )
       .then((response) => {
@@ -144,7 +144,7 @@ class AddBankDetailComponent extends Component {
     };
 
     fetch(
-      APIURL +
+      APIURLNEW +
         "/hisab/bank_details/?business_id="+this.state.userInfo?.business?.ID,
       requestOptions
     )
@@ -177,6 +177,13 @@ class AddBankDetailComponent extends Component {
         window.location.href = "/login";
       });
   }
+
+  changeAcNo = (value) => {
+    let l = value.length
+    console.log(l)
+    let n = l-4;
+    return 'XXXXXX' + value.slice(n);
+  }
   render() {
     if (this.state.isLoading) {
       return (
@@ -200,13 +207,13 @@ class AddBankDetailComponent extends Component {
 
                   <div className="HomeMainDiv" style={{ marginTop: "20px" }}>
                   {
-                    !this.state.bankDetails ?
+                    this.state.bankDetails ?
                     <Container>
                       <Row>
                         <Col>
                           <div className="BankDetails">
                             <img src={bankIcon} alt="bankIcon" /><br />
-                            <span><b>{this.state.bankDetails?.account_number}</b></span><br />
+                            <span><b>{this.changeAcNo(this.state.bankDetails?.account_number)}</b></span><br />
                             <span><b>{this.state.bankDetails?.ifsc_code}</b></span><br />
                             <Link to="/editBankDetail" id="NoHoverLink">
                               <span className="link-edit">
