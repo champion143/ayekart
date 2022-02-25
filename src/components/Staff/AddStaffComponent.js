@@ -138,6 +138,8 @@ class AddStaffComponent extends Component {
     e.preventDefault();
   };
 
+  
+
   fileSize = (size) => {
     if (size === 0) return "0 Bytes";
     const k = 1024;
@@ -174,6 +176,15 @@ class AddStaffComponent extends Component {
       this.handleFiles(files);
     }
   };
+
+  upload = (e) => {
+    e.preventDefault();
+    console.log(e.target.files)
+    const files = e.target.files;
+    if (files.length) {
+      this.handleFiles(files);
+    }
+  }
 
   removeFile = (name) => {
     // find the index of the item
@@ -555,6 +566,14 @@ class AddStaffComponent extends Component {
                                   className="img-fluid"
                                   style={{ width: "60px" }}
                                 />
+                                <input style={{position: 'absolute',
+                                      top: 0,
+                                      opacity: 0,
+                                      left: 0,
+                                      right: 0,
+                                      height: '144px',
+                                      width: '100%'}} 
+                                type="file" hidden onChange={this.upload} />
                                 <p>Drag and drop or browse</p>
                                 <h6>Upload Profile Picture (JPEG/PNG)</h6>
                                 <hr />
