@@ -68,16 +68,17 @@ class StaffReportComponent extends Component {
     });
 
     var SearchResult = this.state.entries.filter((item) =>
-      item.full_name.toString().toLowerCase().includes(value.toLowerCase())
+      item.first_name?.toString()?.toLowerCase()?.includes(value.toLowerCase())||
+      item.last_name?.toString()?.toLowerCase()?.includes(value.toLowerCase())
     );
+    console.log(SearchResult, this.state.data)
     if (value.length <= 0) {
       this.setState({
-        isLoading: true,
+        entries: this.state.data
       });
-      this.getStaff();
     } else {
       this.setState({
-        entries: SearchResult,
+        entries: SearchResult
       });
     }
   }
@@ -213,7 +214,7 @@ class StaffReportComponent extends Component {
       .then((res) => {
         this.setState({
           userInfo: this.state.cookies.get("userInfo"),
-        });
+        },() => console.log(this.state.userInfo.business.ID));
         var d = new Date(),
           month = "" + (d.getMonth() + 1),
           day = "" + d.getDate(),
@@ -516,7 +517,7 @@ class StaffReportComponent extends Component {
                     <div className="SpecificThirdDiv">
                       <Container fluid>
                         <Row>
-                          {this.state.entries.length > 0 &&
+                          {this.state.entries.length && this.state.entries.length > 0 &&
                             this.state.entries.map((item) => (
                               <Col sm="5" className="HomeThirdDivItemDiv">
                                 <div>

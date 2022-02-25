@@ -298,12 +298,8 @@ class CustomerCreateInvoiceComponent extends Component {
       toast.error("Enter valid Phone number");
     } else if (
       this.state.customer_name === "" ||
-      this.state.customer_address === "" ||
       this.state.customer_mobile === "" ||
-      this.state.retailer_signature === "" ||
-      this.state.pan_number === "" ||
-      this.state.gst_reg_no === "" ||
-      this.state.state_code === ""
+      this.state.retailer_signature === ""
     ) {
       toast.error("Enter all the required fields");
     } else {
